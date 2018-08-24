@@ -20,7 +20,7 @@ class SingleItem extends Component {
             <th>
               <p>{this.props.name}</p>
               <ul className="top">
-                <li>Style #: ms13kt1906</li>
+                <li>Style #: MS13KT1906</li>
                 <li>Color: <small><bold>{this.props.color}</bold></small></li>
               </ul>
               <ul className="bottom">
@@ -31,7 +31,7 @@ class SingleItem extends Component {
             </th>
             <th>{this.props.size}</th>
             <th><input type="number" value={this.props.quantity} /></th>
-            <th>{this.props.price}</th>
+            <th>$ <span>{this.props.price}</span></th>
           </tr>
         </tbody>
     )

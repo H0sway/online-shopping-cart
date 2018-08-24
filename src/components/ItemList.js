@@ -68,7 +68,7 @@ class ItemList extends Component {
             photoUrl={item.photoUrl}
             size={item.size}
             quantity={item.quantity}
-            price={item.price}
+            price={item.price.toFixed(2)}
           />
         )
       })
@@ -83,7 +83,7 @@ class ItemList extends Component {
   }
   render() {
     return(
-      <div className="ItemList">
+      <div className="Item-List">
         <Table responsive>
           <thead>
             <tr>
