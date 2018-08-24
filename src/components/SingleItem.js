@@ -14,6 +14,7 @@ class SingleItem extends Component {
       quantity: this.props.quantity,
       color: this.props.color,
       size: this.props.size,
+      price: parseInt(this.props.price),
       cost: null
     }
     // Bind event handlers
@@ -22,6 +23,13 @@ class SingleItem extends Component {
     this.productDetails = this.productDetails.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.changeCost = this.changeCost.bind(this);
+  }
+
+  componentDidMount() {
+    const cost = this.state.quantity * this.state.price;
+    this.setState({
+      cost: cost
+    })
   }
 
   // Event methods for recognizing when something has changed.
@@ -42,6 +50,7 @@ class SingleItem extends Component {
   }
 
   changeCost(e) {
+    console.log("Before " + this.state.cost);
     let amount = e.target.value;
     const price = parseInt(this.props.price);
     if (amount === null ) {
@@ -59,7 +68,6 @@ class SingleItem extends Component {
         cost: cost
       });
     }
-    console.log(this.state.cost);
   }
 
   // Calculate the current cost for this component (the amount of product multiplied by the price)

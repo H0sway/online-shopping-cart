@@ -6,8 +6,7 @@ import './App.css';
 
 // Import Components
 import Header from './components/Header';
-import Checkout from './components/Checkout';
-import Contact from './components/Contact';
+
 import ItemList from './components/ItemList';
 
 class App extends Component {
@@ -19,8 +18,6 @@ class App extends Component {
       <div className="App">
         <Header />
         <ItemList />
-        <Contact />
-        <Checkout />
       </div>
     );
   }

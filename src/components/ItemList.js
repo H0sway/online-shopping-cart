@@ -12,6 +12,8 @@ import checkered from './images/check_tshirt.png';
 
 // Import the SingleItem component, this will be used as the template for each item in the shopping cart.
 import SingleItem from "./SingleItem";
+import Checkout from "./Checkout";
+import Contact from "./Contact";
 
 // List of shopping cart items
 let shoppingList = [
@@ -107,6 +109,10 @@ class ItemList extends Component {
           </thead>
           {this.renderList()}
         </Table>
+        <div className="wrapper">
+          <Contact />
+          <Checkout />
+        </div>
       </div>
     )
   }
