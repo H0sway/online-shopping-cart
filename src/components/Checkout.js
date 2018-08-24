@@ -6,6 +6,9 @@ import { Grid, Col, Row, Button } from 'react-bootstrap'
 
 // Component that renders the checkout functionality for the site. Right now it only calculates the total cost.
 class Checkout extends Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return(
       <div className="Checkout">
@@ -15,12 +18,12 @@ class Checkout extends Component {
           <Button>APPLY</Button>
         </form>
         <div className="checkout-flex">
-          <p>SUB TOTAL</p>
+          <p>SUB TOTAL: ${this.props.calculateSubtotal(this.props.cart)}</p>
           <p>PROMOTION CODE ____ APPLIED</p>
           <p>ESTIMATED SHIPPING*</p>
           <p>You qualify for free shipping because your order is over $50</p>
           <hr />
-          <p>ESTIMAED TOTAL</p>
+          <p>ESTIMATED TOTAL</p>
           <p>Tax will be applied during checkout</p>
           <hr />
           <a href="#">CONTINUE SHOPPING</a>

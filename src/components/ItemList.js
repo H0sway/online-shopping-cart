@@ -18,7 +18,8 @@ const shoppingList = [
     photoUrl: "./images/cotton_tshirt.png",
     size: "S",
     quantity: 1,
-    price: 11.00
+    price: 11.00,
+    totalCost: 11.00
   },
   {
     name: "PRINT GIRLS T",
@@ -27,7 +28,8 @@ const shoppingList = [
     photoUrl: "./images/girls_t.png",
     size: "S",
     quantity: 1,
-    price: 17.00
+    price: 17.00,
+    totalCost: 17.00
   },
   {
     name: "FLOWER PATTERN SHIRT",
@@ -36,7 +38,8 @@ const shoppingList = [
     photoUrl: "./images/flower_shirt.png",
     size: "S",
     quantity: 1,
-    price: 9.00
+    price: 9.00,
+    totalCost: 9.00
   },
   {
     name: "CHECK PATTERN TSHIRT",
@@ -45,7 +48,8 @@ const shoppingList = [
     photoUrl: "./images/check_tshirt.png",
     size: "S",
     quantity: 1,
-    price: 22.00
+    price: 22.00,
+    totalCost: 22.00
   }
 ]
 
@@ -54,19 +58,8 @@ class ItemList extends Component {
   constructor() {
     super();
     this.state = {
-      list: shoppingList,
-      cottonAmount: 1,
-      cottenPrice: 11.00,
-      cottenTotal: 11.00,
-      girlstAmount: 1,
-      girlstPrice: 17.00,
-      girlstTotal: 17.00,
-      flowerAmount: 1,
-      flowerPrice: 9.00,
-      flowerTotal: 9.00,
-      checkeredAmount: 1,
-      checkeredPrice: 22.00,
-      checkeredTotal: 22.00
+      shoppingCart: shoppingList,
+      subtotal: null
     }
     this.removeItem = this.removeItem.bind(this);
     this.changeCost = this.changeCost.bind(this);
@@ -74,7 +67,7 @@ class ItemList extends Component {
 
   // Remove a specific item from the list when you click on X Remove
   removeItem(val) {
-    const newList = this.state.list.filter((item, i) => {
+    const newList = this.state.shoppingCart.filter((item, i) => {
       return i !== val;
     });
     // console.log(newList, val);
@@ -95,9 +88,9 @@ class ItemList extends Component {
   renderList() {
     // Map this.state.list, creating an individual item for each object in the array. For each item a SingleItem component is rendered.
     // Props are used in the SingleItem component
-    if (this.state.list.length) {
-      console.log(this.state.list);
-      const list = this.state.list;
+    if (this.state.shoppingCart.length) {
+      console.log(this.state.shoppingCart);
+      const list = this.state.shoppingCart;
       return list.map((item, i) => {
         return (
           <SingleItem
@@ -109,6 +102,7 @@ class ItemList extends Component {
             photoUrl={item.photoUrl}
             size={item.size}
             quantity={item.quantity}
+            otherName={item.short + "Amount"}
             price={item.price.toFixed(2)}
             cost={parseInt(item.price)}
             removeItem={this.removeItem}
@@ -126,13 +120,23 @@ class ItemList extends Component {
     }
   }
 
+  calculateSubtotal(cart) {
+    const list = cart;
+    let newSubtotal = list.reduce((total, item) => {
+      return total + item.totalCost;
+    },0);
+    const subtotal = newSubtotal;
+    console.log(subtotal);
+    return subtotal;
+  }
+
   render() {
     return(
       <div className="Item-List">
         <Table responsive>
           <thead>
             <tr>
-              <th>{this.state.list.length} Items</th>
+              <th>{this.state.length} Items</th>
               <th>Size</th>
               <th>Quantity</th>
               <th>Price</th>
@@ -142,7 +146,10 @@ class ItemList extends Component {
         </Table>
         <div className="wrapper">
           <Contact />
-          <Checkout />
+          <Checkout
+            calculateSubtotal={this.calculateSubtotal}
+            cart={this.state.shoppingCart}
+          />
         </div>
       </div>
     )

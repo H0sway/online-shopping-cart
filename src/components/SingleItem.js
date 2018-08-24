@@ -75,14 +75,12 @@ class SingleItem extends Component {
   }
 
   configurePhoto() {
-    console.log({cotton})
     const val = this.props.value;
     const short = this.props.short;
     const photo = images[val].img[short];
     this.setState({
       photoUrl: photo
     })
-    console.log(photo);
   }
 
   render() {
@@ -103,7 +101,7 @@ class SingleItem extends Component {
               </ul>
             </th>
             <th>{this.state.size}</th>
-            <th><input name={this.props.short + "Amount"} type="number" value={this.state.quantity} onChange={this.handleChange && this.props.changeCost}/></th>
+            <th><input name={this.props.otherName} type="number" value={this.props.quantity} onChange={this.props.changeCost}/></th>
             <th>$ <span>{this.props.price}</span></th>
           </tr>
           <Modal show={this.state.show} onHide={this.handleClose} className="item-modal">
