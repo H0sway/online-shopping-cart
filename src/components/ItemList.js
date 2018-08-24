@@ -51,8 +51,8 @@ let shoppingList = [
 
 // Component that renders the entire list of shopping cart items.
 class ItemList extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       list: shoppingList,
     }

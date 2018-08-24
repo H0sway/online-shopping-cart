@@ -10,21 +10,66 @@ class SingleItem extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      show: false
+      show: false,
+      quantity: this.props.quantity,
+      color: this.props.color,
+      size: this.props.size,
+      cost: null
     }
+    // Bind event handlers
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.productDetails = this.productDetails.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.changeCost = this.changeCost.bind(this);
   }
+
+  // Event methods for recognizing when something has changed.
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      [name]: value,
+    })
+  }
+
   handleClose() {
     this.setState({ show: false })
   }
+
   handleShow() {
     this.setState({ show: true });
   }
+
+  changeCost(e) {
+    let amount = e.target.value;
+    const price = parseInt(this.props.price);
+    if (amount === null ) {
+      amount = 0;
+      const cost = amount * price;
+      this.setState({
+        quantity: amount,
+        cost: cost
+      })
+    }
+    else {
+      const cost = amount * price;
+      this.setState({
+        quantity: amount,
+        cost: cost
+      });
+    }
+    console.log(this.state.cost);
+  }
+
+  // Calculate the current cost for this component (the amount of product multiplied by the price)
+  calculateCost() {
+  }
+
   productDetails() {
     alert("You clicked on the product details!");
   }
+
   render() {
     return(
         <tbody className="Single-Item">
@@ -33,7 +78,7 @@ class SingleItem extends Component {
               <p>{this.props.name}</p>
               <ul className="top">
                 <li>Style #: MS13KT1906</li>
-                <li>Color: <small>{this.props.color}</small></li>
+                <li>Color: <small>{this.state.color}</small></li>
               </ul>
               <ul className="bottom">
                 <li className="edit" onClick={this.handleShow}>Edit</li>
@@ -41,8 +86,8 @@ class SingleItem extends Component {
                 <li className="save">Save For Later</li>
               </ul>
             </th>
-            <th>{this.props.size}</th>
-            <th><input name="quantity" type="number" defaultValue={this.props.quantity} /></th>
+            <th>{this.state.size}</th>
+            <th><input name="quantity" type="number" value={this.state.quantity} onChange={this.changeCost}/></th>
             <th>$ <span>{this.props.price}</span></th>
           </tr>
           <Modal show={this.state.show} onHide={this.handleClose} className="item-modal">
@@ -51,18 +96,18 @@ class SingleItem extends Component {
               <h1><small>$</small> {this.props.price}</h1>
               <h3>MS13KT1906</h3>
               <ul>
-                <li><button className="red"></button></li>
-                <li><button className="pink"></button></li>
-                <li><button className="blue"></button></li>
+                <li><button className="red" name="color" onClick={this.handleChange} value="red"></button></li>
+                <li><button className="pink" name="color" onClick={this.handleChange} value="pink"></button></li>
+                <li><button className="blue" name="color" onClick={this.handleChange} value="blue"></button></li>
               </ul>
-              <h3>Color: {this.props.color}</h3>
+              <h3>Color: {this.state.color}</h3>
               <form>
-                <select name="size" defaultValue={this.props.size}>
-                  <option value="small">Small</option>
-                  <option value="medium">Medium</option>
-                  <option value="large">Large</option>
+                <select name="size" value={this.state.size} onChange={this.handleChange}>
+                  <option value="S">Small</option>
+                  <option value="M">Medium</option>
+                  <option value="L">Large</option>
                 </select>
-                <input name="quantity" type="number" defaultValue={this.props.quantity} />
+                <input name="quantity" type="number" value={this.state.quantity} onChange={this.changeCost} />
               </form>
             </Modal.Body>
             <Modal.Footer>
