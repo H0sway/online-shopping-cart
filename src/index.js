@@ -1,6 +1,4 @@
-// Import dependencies
-// Import react-bootstrap
-// import 'bootstrap/dist/css/bootstrap.css';
+// Import dependencies 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
