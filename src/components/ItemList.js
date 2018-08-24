@@ -14,7 +14,7 @@ import checkered from './images/check_tshirt.png';
 import SingleItem from "./SingleItem";
 
 // List of shopping cart items
-const shoppingList = [
+let shoppingList = [
   {
     name: "COTTON TSHIRT",
     color: "blue",
@@ -51,15 +51,18 @@ const shoppingList = [
 
 // Component that renders the entire list of shopping cart items.
 class ItemList extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      list: shoppingList
+      list: shoppingList,
     }
     this.removeItem = this.removeItem.bind(this);
   }
-  removeItem(i) {
-    const newList = this.state.list.slice(i);
+  removeItem(val) {
+    const newList = this.state.list.filter((item, i) => {
+      return i !== val;
+    });
+    console.log(newList, val);
     this.setState({
       list: newList
     })
@@ -70,6 +73,7 @@ class ItemList extends Component {
         return (
           <SingleItem
             key={i}
+            value={i}
             name={item.name}
             color={item.color}
             photoUrl={item.photoUrl}

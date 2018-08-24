@@ -37,7 +37,7 @@ class SingleItem extends Component {
               </ul>
               <ul className="bottom">
                 <li className="edit" onClick={this.handleShow}>Edit</li>
-                <li className="delete" onClick={this.props.removeItem}>X Remove</li>
+                <li className="delete" onClick={() => this.props.removeItem(this.props.value)}>X Remove</li>
                 <li className="save">Save For Later</li>
               </ul>
             </th>
