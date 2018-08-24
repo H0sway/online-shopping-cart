@@ -4,6 +4,9 @@ import React, { Component } from 'react';
 // Import Stylesheet
 import './App.css';
 
+// Import Bootstrap Grid
+import { Grid } from 'react-bootstrap';
+
 // Import Components
 import Header from './components/Header';
 
@@ -16,8 +19,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
-        <ItemList />
+        <Grid>
+          <Header />
+          <ItemList />
+        </Grid>
       </div>
     );
   }

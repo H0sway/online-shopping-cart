@@ -4,47 +4,45 @@ import React, { Component } from 'react';
 // import bootstrap components
 import { Table } from 'react-bootstrap';
 
-// Import images for each of the shopping list items
-import cotton from './images/cotton_tshirt.png';
-import girlst from './images/girls_t.png';
-import flower from './images/flower_shirt.png';
-import checkered from './images/check_tshirt.png';
-
 // Import the SingleItem component, this will be used as the template for each item in the shopping cart.
 import SingleItem from "./SingleItem";
 import Checkout from "./Checkout";
 import Contact from "./Contact";
 
 // List of shopping cart items
-let shoppingList = [
+const shoppingList = [
   {
     name: "COTTON TSHIRT",
+    short: "cotton",
     color: "blue",
-    photoUrl: {cotton},
+    photoUrl: "./images/cotton_tshirt.png",
     size: "S",
     quantity: 1,
     price: 11.00
   },
   {
     name: "PRINT GIRLS T",
+    short: "girlst",
     color: "pink",
-    photoUrl: {girlst},
+    photoUrl: "./images/girls_t.png",
     size: "S",
     quantity: 1,
     price: 17.00
   },
   {
     name: "FLOWER PATTERN SHIRT",
+    short: "flower",
     color: "blue",
-    photoUrl: {flower},
+    photoUrl: "./images/flower_shirt.png",
     size: "S",
     quantity: 1,
     price: 9.00
   },
   {
     name: "CHECK PATTERN TSHIRT",
+    short: "checkered",
     color: "red",
-    photoUrl: {checkered},
+    photoUrl: "./images/check_tshirt.png",
     size: "S",
     quantity: 1,
     price: 22.00
@@ -57,32 +55,64 @@ class ItemList extends Component {
     super();
     this.state = {
       list: shoppingList,
+      cottonAmount: 1,
+      cottenPrice: 11.00,
+      cottenTotal: 11.00,
+      girlstAmount: 1,
+      girlstPrice: 17.00,
+      girlstTotal: 17.00,
+      flowerAmount: 1,
+      flowerPrice: 9.00,
+      flowerTotal: 9.00,
+      checkeredAmount: 1,
+      checkeredPrice: 22.00,
+      checkeredTotal: 22.00
     }
     this.removeItem = this.removeItem.bind(this);
+    this.changeCost = this.changeCost.bind(this);
   }
+
+  // Remove a specific item from the list when you click on X Remove
   removeItem(val) {
     const newList = this.state.list.filter((item, i) => {
       return i !== val;
     });
-    console.log(newList, val);
+    // console.log(newList, val);
     this.setState({
       list: newList
     })
   }
+
+  // Specific event handler for when the total cost has to be recalculated
+  changeCost(e) {
+    const name = e.target.name;
+    let amount = e.target.value;
+    this.setState({
+      [name]: amount
+    })
+  }
+
   renderList() {
+    // Map this.state.list, creating an individual item for each object in the array. For each item a SingleItem component is rendered.
+    // Props are used in the SingleItem component
     if (this.state.list.length) {
-      return this.state.list.map((item, i) => {
+      console.log(this.state.list);
+      const list = this.state.list;
+      return list.map((item, i) => {
         return (
           <SingleItem
             key={i}
             value={i}
             name={item.name}
+            short={item.short}
             color={item.color}
             photoUrl={item.photoUrl}
             size={item.size}
             quantity={item.quantity}
             price={item.price.toFixed(2)}
+            cost={parseInt(item.price)}
             removeItem={this.removeItem}
+            changeCost={this.changeCost}
           />
         )
       })
@@ -95,6 +125,7 @@ class ItemList extends Component {
       )
     }
   }
+
   render() {
     return(
       <div className="Item-List">

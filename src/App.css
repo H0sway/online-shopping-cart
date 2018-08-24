@@ -13,6 +13,24 @@
   margin-bottom: .5em;
 }
 
+.item-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  align-content: flex-start;
+}
+
+.img-responsive {
+  float: left;
+  clear: right;
+  height: 15em;
+  width: 18em;
+}
+
+.bottom {
+  margin-top: 10em;
+}
+
 .top li {
     display: block;
     color: #9D9D9D;
@@ -34,6 +52,10 @@
 .upwards {
   border-top: .65em solid #E7E7E7;
   padding-top: 1em;
+}
+
+.modal-body img {
+  margin-top: 4em;
 }
 
 .modal-body ul {
@@ -83,4 +105,13 @@
   margin: .2em;
   text-decoration: underline;
   curser: pointer;
+}
+
+.wrapper {
+  border-top: 1em solid #E7E7E7;
+  padding-top: .5em;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  align-content: flex-start;
 }
