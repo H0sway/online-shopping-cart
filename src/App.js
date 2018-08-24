@@ -18,9 +18,9 @@ class App extends Component {
     return (
       <div className="App">
         <Header />
-        <Checkout />
         <ItemList />
         <Contact />
+        <Checkout />
       </div>
     );
   }
