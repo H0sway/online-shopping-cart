@@ -54,7 +54,7 @@ class ItemList extends Component {
   constructor() {
     super();
     this.state = {
-      length: shoppingList.length
+      list: shoppingList,
     }
   }
   renderList() {
@@ -66,7 +66,10 @@ class ItemList extends Component {
         <Table responsive>
           <thead>
             <tr>
-              <th>{this.state.length}</th>
+              <th>{this.state.list.length}</th>
+              <th>Size</th>
+              <th>Quantity</th>
+              <th>Price</th>
             </tr>
           </thead>
         </Table>

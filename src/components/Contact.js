@@ -1,5 +1,5 @@
 // Import React
-import React, { Component } from 'react';
+import React from 'react';
 
 // Functional component that displays the contact information for the faux site.
 const Contact = () => {
