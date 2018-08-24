@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 class Checkout extends Component {
   render() {
     return(
-      <div>
+      <div className="Checkout">
         <p>ENTER PROMOTION CODE OR GIFT CARD</p>
         <form>
           <input placeholder="Enter Code" />
@@ -22,7 +22,7 @@ class Checkout extends Component {
         <hr />
         <a href="#">CONTINUE SHOPPING</a>
         <button>CHECKOUT</button>
-        <p><i class="fas fa-lock"></i>Secure checkout. Shopping is always safe & secure</p>
+        <p><i className="fas fa-lock"></i>Secure checkout. Shopping is always safe & secure</p>
       </div>
     )
   }

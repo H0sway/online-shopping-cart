@@ -4,14 +4,14 @@ import React, { Component } from 'react';
 // import bootstrap components
 import { Table } from 'react-bootstrap';
 
-// Import photos for each of the shopping list items
-import cotton from './images/cotton_tshirt.jpg';
-import girlst from './images/girls_t.jpg';
-import flower from './images/flower_shirt.jpeg';
-import checkered from './images/check_tshirt.jpg';
+// Import images for each of the shopping list items
+import cotton from './images/cotton_tshirt.png';
+import girlst from './images/girls_t.png';
+import flower from './images/flower_shirt.png';
+import checkered from './images/check_tshirt.png';
 
 // Import the SingleItem component, this will be used as the template for each item in the shopping cart.
-// import SingleItem from "./SingleItem";
+import SingleItem from "./SingleItem";
 
 // List of shopping cart items
 const shoppingList = [
@@ -58,7 +58,28 @@ class ItemList extends Component {
     }
   }
   renderList() {
-
+    if (this.state.list.length) {
+      return this.state.list.map((item, i) => {
+        return (
+          <SingleItem
+            key={i}
+            name={item.name}
+            color={item.color}
+            photoUrl={item.photoUrl}
+            size={item.size}
+            quantity={item.quantity}
+            price={item.price}
+          />
+        )
+      })
+    }
+    else {
+      return (
+        <div className="empty-list">
+          <p>There's nothing in your cart.</p>
+        </div>
+      )
+    }
   }
   render() {
     return(
@@ -66,12 +87,13 @@ class ItemList extends Component {
         <Table responsive>
           <thead>
             <tr>
-              <th>{this.state.list.length}</th>
+              <th>{this.state.list.length} Items</th>
               <th>Size</th>
               <th>Quantity</th>
               <th>Price</th>
             </tr>
           </thead>
+          {this.renderList()}
         </Table>
       </div>
     )
