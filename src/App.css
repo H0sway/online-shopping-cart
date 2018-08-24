@@ -20,6 +20,7 @@
 
 .bottom li {
   display: inline-block;
+  cursor: pointer;
   color: #1d1d1d;
   margin: .1em;
 }
@@ -28,4 +29,58 @@
   border-left: .1em solid #1d1d1d;
   border-right: .1em solid #1d1d1d;
   padding: 0 .2em;
+}
+
+.upwards {
+  border-top: .65em solid #E7E7E7;
+  padding-top: 1em;
+}
+
+.modal-body ul {
+  margin: 0;
+  padding: 0;
+}
+
+.modal-body li {
+  display: inline-block;
+  margin: 1em;
+}
+
+.modal-body button {
+  border: 5em solid linear-gradient(#FFFFFF, #666B66);
+  border-radius: 15%;
+  height: 1.5em;
+  width: 3em;
+  curser: pointer;
+}
+
+.red {
+  background-color: #FF0000;
+}
+
+.pink {
+  background-color: #FFC0CB;
+}
+
+.blue {
+  background-color: #0000FF;
+}
+
+.modal-body select, input {
+  margin: .5em;
+}
+
+.modal-footer {
+  text-align: center;
+}
+
+.modal-footer button {
+  width: 15em;
+  weight: 20em;
+}
+
+.modal-footer p {
+  margin: .2em;
+  text-decoration: underline;
+  curser: pointer;
 }

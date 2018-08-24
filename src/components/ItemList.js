@@ -54,8 +54,15 @@ class ItemList extends Component {
   constructor() {
     super();
     this.state = {
-      list: shoppingList,
+      list: shoppingList
     }
+    this.removeItem = this.removeItem.bind(this);
+  }
+  removeItem(i) {
+    const newList = this.state.list.slice(i);
+    this.setState({
+      list: newList
+    })
   }
   renderList() {
     if (this.state.list.length) {
@@ -69,6 +76,7 @@ class ItemList extends Component {
             size={item.size}
             quantity={item.quantity}
             price={item.price.toFixed(2)}
+            removeItem={this.removeItem}
           />
         )
       })
