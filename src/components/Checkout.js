@@ -8,22 +8,47 @@ import { Grid, Col, Row, Button } from 'react-bootstrap'
 class Checkout extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      promo: "AJS49",
+    }
+    this.handleChange = this.handleChange.bind(this);
+    this.enterPromo = this.enterPromo.bind(this);
   }
+
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      [name]: value
+    })
+  }
+
+  enterPromo() {
+    alert("You succesfully entered a promotion code!");
+  }
+
+  componentDidMount() {
+    this.props.calculateSubtotal(this.props.cotton, this.props.girlst, this.props.flower, this.props.checkered);
+  }
+
   render() {
+    if (this.props.newSubtotal) {
+      this.props.calculateSubtotal(this.props.cotton, this.props.girlst, this.props.flower, this.props.checkered);
+    }
     return(
       <div className="Checkout">
         <p>ENTER PROMOTION CODE OR GIFT CARD</p>
         <form>
-          <input placeholder="Enter Code" />
-          <Button>APPLY</Button>
+          <input name="promo" onChange={this.handleChange} value={this.state.promo} />
+          <Button onClick={this.enterPromo}>APPLY</Button>
         </form>
         <div className="checkout-flex">
-          <p>SUB TOTAL: ${this.props.calculateSubtotal(this.props.cart)}</p>
-          <p>PROMOTION CODE ____ APPLIED</p>
+          <p>SUB TOTAL: ${this.props.subtotal}</p>
+          <p>PROMOTION CODE <strong>{this.state.promo}</strong> APPLIED</p>
           <p>ESTIMATED SHIPPING*</p>
-          <p>You qualify for free shipping because your order is over $50</p>
+          <p>*You qualify for free shipping because your order is over $50</p>
           <hr />
-          <p>ESTIMATED TOTAL</p>
+          <p>ESTIMATED TOTAL <strong>${(this.props.subtotal * .8).toFixed(2)}</strong></p>
           <p>Tax will be applied during checkout</p>
           <hr />
           <a href="#">CONTINUE SHOPPING</a>

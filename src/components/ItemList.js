@@ -4,130 +4,98 @@ import React, { Component } from 'react';
 // import bootstrap components
 import { Table } from 'react-bootstrap';
 
+// Import images
+import cotton from './images/cotton_tshirt.png';
+import girlst from './images/girls_t.png';
+import flower from './images/flower_shirt.png';
+import checkered from './images/check_tshirt.png';
+
 // Import the SingleItem component, this will be used as the template for each item in the shopping cart.
 import SingleItem from "./SingleItem";
 import Checkout from "./Checkout";
 import Contact from "./Contact";
-
-// List of shopping cart items
-const shoppingList = [
-  {
-    name: "COTTON TSHIRT",
-    short: "cotton",
-    color: "blue",
-    photoUrl: "./images/cotton_tshirt.png",
-    size: "S",
-    quantity: 1,
-    price: 11.00,
-    totalCost: 11.00
-  },
-  {
-    name: "PRINT GIRLS T",
-    short: "girlst",
-    color: "pink",
-    photoUrl: "./images/girls_t.png",
-    size: "S",
-    quantity: 1,
-    price: 17.00,
-    totalCost: 17.00
-  },
-  {
-    name: "FLOWER PATTERN SHIRT",
-    short: "flower",
-    color: "blue",
-    photoUrl: "./images/flower_shirt.png",
-    size: "S",
-    quantity: 1,
-    price: 9.00,
-    totalCost: 9.00
-  },
-  {
-    name: "CHECK PATTERN TSHIRT",
-    short: "checkered",
-    color: "red",
-    photoUrl: "./images/check_tshirt.png",
-    size: "S",
-    quantity: 1,
-    price: 22.00,
-    totalCost: 22.00
-  }
-]
 
 // Component that renders the entire list of shopping cart items.
 class ItemList extends Component {
   constructor() {
     super();
     this.state = {
-      shoppingCart: shoppingList,
-      subtotal: null
+      cottonRender: true,
+      cottonQuantity: 1,
+      cottonTotal: 11.00,
+      girlstRender: true,
+      girlstQuantity: 1,
+      girlstTotal: 17.00,
+      flowerRender: true,
+      flowerQuantity: 1,
+      flowerTotal: 9.00,
+      checkeredRender: true,
+      checkeredQuantity: 1,
+      checkeredTotal: 22.00,
+      newSubtotal: false,
+      subtotal: 0
     }
-    this.removeItem = this.removeItem.bind(this);
-    this.changeCost = this.changeCost.bind(this);
+    // Bind event listeners.
+    this.handleChange = this.handleChange.bind(this);
+    this.removeCotton = this.removeCotton.bind(this);
+    this.removeGirlst = this.removeGirlst.bind(this);
+    this.removeFlower = this.removeFlower.bind(this);
+    this.removeCheckered = this.removeCheckered.bind(this);
+    this.calculateSubtotal = this.calculateSubtotal.bind(this);
+  }
+
+  // Handle the form changes, keep them updated and saved to state.
+  handleChange(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({
+      [name]: value,
+      newSubtotal: true,
+    })
   }
 
   // Remove a specific item from the list when you click on X Remove
-  removeItem(val) {
-    const newList = this.state.shoppingCart.filter((item, i) => {
-      return i !== val;
-    });
-    // console.log(newList, val);
+  removeCotton() {
     this.setState({
-      list: newList
+      cottonRender: false,
+      cottonQuantity: 0
     })
   }
 
-  // Specific event handler for when the total cost has to be recalculated
-  changeCost(e) {
-    const name = e.target.name;
-    let amount = e.target.value;
+  removeGirlst() {
     this.setState({
-      [name]: amount
+      girlstRender: false,
+      girlstQuantity: 0
     })
   }
 
-  renderList() {
-    // Map this.state.list, creating an individual item for each object in the array. For each item a SingleItem component is rendered.
-    // Props are used in the SingleItem component
-    if (this.state.shoppingCart.length) {
-      console.log(this.state.shoppingCart);
-      const list = this.state.shoppingCart;
-      return list.map((item, i) => {
-        return (
-          <SingleItem
-            key={i}
-            value={i}
-            name={item.name}
-            short={item.short}
-            color={item.color}
-            photoUrl={item.photoUrl}
-            size={item.size}
-            quantity={item.quantity}
-            otherName={item.short + "Amount"}
-            price={item.price.toFixed(2)}
-            cost={parseInt(item.price)}
-            removeItem={this.removeItem}
-            changeCost={this.changeCost}
-          />
-        )
-      })
-    }
-    else {
-      return (
-        <div className="empty-list">
-          <p>There's nothing in your cart.</p>
-        </div>
-      )
-    }
+  removeFlower() {
+    this.setState({
+      flowerRender: false,
+      flowerQuantity: 0
+    })
   }
 
-  calculateSubtotal(cart) {
-    const list = cart;
-    let newSubtotal = list.reduce((total, item) => {
-      return total + item.totalCost;
-    },0);
-    const subtotal = newSubtotal;
-    console.log(subtotal);
-    return subtotal;
+  removeCheckered() {
+    this.setState({
+      checkeredRender: false,
+      checkeredQuantity: 0
+    })
+  }
+
+  calculateSubtotal(cotton, girlst, flower, checkered) {
+    // Calculate the total for each individual component
+    const cottonTotal = cotton * 11.00;
+    const girlstTotal = girlst * 17.00;
+    const flowerTotal = flower * 9.00;
+    const checkeredTotal = checkered * 22.00;
+
+    // Find the subtotal before discount
+    const subtotal = cottonTotal + girlstTotal + flowerTotal + checkeredTotal;
+    this.setState({
+      subtotal: subtotal,
+      newSubtotal: false,
+    })
   }
 
   render() {
@@ -142,13 +110,72 @@ class ItemList extends Component {
               <th>Price</th>
             </tr>
           </thead>
-          {this.renderList()}
+          {this.state.cottonRender ?
+            <SingleItem
+              name="COTTON TSHIRT"
+              color="blue"
+              photo={cotton}
+              size="S"
+              quantity={this.state.cottonQuantity}
+              otherName="cottonQuantity"
+              price="11.00"
+              totalCost={this.state.cottonTotal}
+              removeItem={this.removeCotton}
+              handleChange={this.handleChange}
+            /> : ''
+          }
+          {this.state.girlstRender ?
+            <SingleItem
+              name="PRINT GIRLS T"
+              color="pink"
+              photo={girlst}
+              size="S"
+              quantity={this.state.girlstQuantity}
+              otherName="girlstQuantity"
+              price="17.00"
+              totalCost={this.state.girlstTotal}
+              removeItem={this.removeGirlst}
+              handleChange={this.handleChange}
+            /> : ''
+          }
+          {this.state.flowerRender ?
+            <SingleItem
+              name="FLOWER PATTERN SHIRT"
+              color="blue"
+              photo={flower}
+              size="S"
+              quantity={this.state.flowerQuantity}
+              otherName="flowerQuantity"
+              price="9.00"
+              totalCost={this.state.flowerTotal}
+              removeItem={this.removeFlower}
+              handleChange={this.handleChange}
+            /> : ''
+          }
+          {this.state.checkeredRender ?
+            <SingleItem
+              name="CHECK PATTERN TSHIRT"
+              color="red"
+              photo={checkered}
+              size="S"
+              quantity={this.state.checkeredQuantity}
+              otherName="checkeredQuantity"
+              price="22.00"
+              totalCost={this.state.checkeredTotal}
+              removeItem={this.removeCheckered}
+              handleChange={this.handleChange}
+            /> : ''}
         </Table>
         <div className="wrapper">
           <Contact />
           <Checkout
             calculateSubtotal={this.calculateSubtotal}
-            cart={this.state.shoppingCart}
+            cotton={this.state.cottonQuantity}
+            girlst={this.state.girlstQuantity}
+            flower={this.state.flowerQuantity}
+            checkered={this.state.checkeredQuantity}
+            newSubtotal={this.state.newSubtotal}
+            subtotal={(this.state.subtotal).toFixed(2)}
           />
         </div>
       </div>

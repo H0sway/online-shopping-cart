@@ -4,60 +4,28 @@ import React, { Component } from 'react';
 // import bootstrap components
 import { Image, Modal, Button, Row, Col } from 'react-bootstrap';
 
-// Import images
-import cotton from './images/cotton_tshirt.png';
-import girlst from './images/girls_t.png';
-import flower from './images/flower_shirt.png';
-import checkered from './images/check_tshirt.png';
-
-// Put the images in an array
-const images = [
-  {
-    img: {cotton}
-  },
-  {
-    img: {girlst}
-  },
-  {
-    img: {flower}
-  },
-  {
-    img: {checkered}
-  }
-]
-
 // This will be the template for every item in the shopping list.
 class SingleItem extends Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       show: false,
-      quantity: this.props.quantity,
-      color: this.props.color,
-      size: this.props.size,
-      quantity: this.props.quantity,
-      price: parseInt(this.props.price),
-      photoUrl: this.props.photoUrl,
-      cost: this.props.cost
+      color: this.props.color
     }
     // Bind event handlers
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.productDetails = this.productDetails.bind(this);
-    this.handleChange = this.handleChange.bind(this);
+    this.handleLocalChange = this.handleLocalChange.bind(this);
   }
 
-  // Event methods for recognizing when something has changed.
-  handleChange(e) {
+  // Handling event listeners that don't have any impact outside of the component
+  handleLocalChange(e) {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({
-      [name]: value,
+      [name]: value
     })
-  }
-
-  componentDidMount() {
-    this.configurePhoto();
   }
 
   // Opening and closing the modal
@@ -74,34 +42,25 @@ class SingleItem extends Component {
     alert("You clicked on the product details!");
   }
 
-  configurePhoto() {
-    const val = this.props.value;
-    const short = this.props.short;
-    const photo = images[val].img[short];
-    this.setState({
-      photoUrl: photo
-    })
-  }
-
   render() {
     return(
         <tbody className="Single-Item">
           <tr>
             <th>
+              <Image src={this.props.photo} responsive />
               <p>{this.props.name}</p>
-              <Image src={this.state.photoUrl} responsive />
               <ul className="top">
                 <li>Style #: MS13KT1906</li>
                 <li>Color: <small>{this.state.color}</small></li>
               </ul>
               <ul className="bottom">
                 <li className="edit" onClick={this.handleShow}>Edit</li>
-                <li className="delete" onClick={() => this.props.removeItem(this.props.value)}>X Remove</li>
+                <li className="delete" onClick={this.props.removeItem}>X Remove</li>
                 <li className="save">Save For Later</li>
               </ul>
             </th>
-            <th>{this.state.size}</th>
-            <th><input name={this.props.otherName} type="number" value={this.props.quantity} onChange={this.props.changeCost}/></th>
+            <th>{this.props.size}</th>
+            <th><input className="quantity" name={this.props.otherName} type="number" min="0" value={this.props.quantity} onChange={this.props.handleChange}/></th>
             <th>$ <span>{this.props.price}</span></th>
           </tr>
           <Modal show={this.state.show} onHide={this.handleClose} className="item-modal">
@@ -112,9 +71,9 @@ class SingleItem extends Component {
                   <h1><small>$</small> {this.props.price}</h1>
                   <h3>MS13KT1906</h3>
                   <ul>
-                    <li><button className="red" name="color" onClick={this.handleChange} value="red"></button></li>
-                    <li><button className="pink" name="color" onClick={this.handleChange} value="pink"></button></li>
-                    <li><button className="blue" name="color" onClick={this.handleChange} value="blue"></button></li>
+                    <li><button className="red" name="color" onClick={this.handleLocalChange} value="red"></button></li>
+                    <li><button className="pink" name="color" onClick={this.handleLocalChange} value="pink"></button></li>
+                    <li><button className="blue" name="color" onClick={this.handleLocalChange} value="blue"></button></li>
                   </ul>
                   <h3>Color: {this.state.color}</h3>
                   <form>
@@ -123,7 +82,7 @@ class SingleItem extends Component {
                       <option value="M">Medium</option>
                       <option value="L">Large</option>
                     </select>
-                    <input name={this.props.short + "Amount"} type="number" value={this.state.quantity} onChange={this.handleChange && this.props.changeCost} />
+                    <input name={this.props.otherName} type="number" min="0" step="1" value={this.props.quantity} onChange={this.props.handleChange} />
                   </form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -132,7 +91,7 @@ class SingleItem extends Component {
                 </Modal.Footer>
               </Col>
               <Col xs={4}>
-                <Image src={this.state.photoUrl} responsive />
+                <Image src={this.props.photo} responsive />
               </Col>
             </Row>
           </Modal>
