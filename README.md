@@ -6,3 +6,8 @@
 2. Clone this repository.
 3. Install dependencies by running yarn add in the command line.
 4. Start the server with yarn start. This should open the page in your browser, allowing you to view this app.
+
+## Design
+
+![Shopping cart main view](./public/shopping-cart.png)
+![Individual item popup](./public/shopping-cart-popup.png)
