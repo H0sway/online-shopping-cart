@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 
 // Import bootstrap grid Components
-import { Grid, Col, Row, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 // Component that renders the checkout functionality for the site. Right now it only calculates the total cost.
 class Checkout extends Component {

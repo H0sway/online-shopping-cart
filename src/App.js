@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import './App.css';
 
 // Import Bootstrap Grid
-import { Grid } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 // Import Components
 import Header from './components/Header';
@@ -13,16 +13,13 @@ import Header from './components/Header';
 import ItemList from './components/ItemList';
 
 class App extends Component {
-  constructor() {
-    super();
-  }
   render() {
     return (
       <div className="App">
-        <Grid>
+        <Container>
           <Header />
           <ItemList />
-        </Grid>
+        </Container>
       </div>
     );
   }
